@@ -8,7 +8,6 @@ export function MainLayout() {
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? "active" : "")}
-            end
           >
             Home
           </NavLink>

@@ -7,10 +7,22 @@ export const PostById = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json();
+      })
       .then((data) => {
         setPost(data);
+      })
+      .catch(() => {
+        setPost(null);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, [postId]);

@@ -6,10 +6,22 @@ export function Posts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json();
+      })
       .then((data) => {
         setPosts(data.slice(0, 10));
+      })
+      .catch(() => {
+        setPosts([]);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);
